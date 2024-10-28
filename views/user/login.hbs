@@ -6,7 +6,8 @@
     <div class="left-side"></div>
 
     <div class="right-side">
-        <form>
+        <form method="post" action="/user/login">
+            <input type="text" id="message" value="{{{message}}}" name="message" hidden>
             <div class="btn-group">
                 <button class="btn">
                     <img class="logo"
@@ -25,10 +26,11 @@
             <div class="or">OR</div>
 
             <label for="email">Email</label>
-            <input type="text" placeholder="Enter Email" name="email" required />
+            <input id = "email" type="text" placeholder="Enter Email" name="email" required />
 
             <label for="password">Password</label>
-            <input type="password" placeholder="Enter Password" name="password" required />
+
+            <input id = "password" type="password" placeholder="Enter Password" name="password" required />
 
             <button type="submit" class="login-btn">Sign in</button>
             <div class="links">
@@ -41,9 +43,38 @@
 
 <script>
 
-    const message = {{{message}}}
+    const message = document.getElementById('message').value;
 
     if(message){
         Swal.fire(message);
+    }
+
+
+    function validateForm(event) {
+        // Prevent default form submission
+
+        // Get form values
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        // Email validation regex
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        // Email validation
+        if (!emailPattern.test(email)) {
+            Swal.fire("Please enter a valid email address.");
+            return false;
+        }
+
+        // Password length validation
+        if (password.length < 6) {
+            Swal.fire("Password must be at least 6 characters long.");
+            return false;
+        }
+
+
+        // If all validations pass
+        //alert("Form submitted successfully!");
+        //return true;
     }
 </script>
